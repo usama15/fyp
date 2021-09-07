@@ -10,6 +10,7 @@ import {
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import {ScrollView} from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import database from "@react-native-firebase/database"
 import {
   Left,
   Card,
@@ -57,20 +58,25 @@ function Accessories({addTo, deleteFrom, cart}) {
   const comdata = cpost.filter(x => x.id.id === data.id);
 
   function addComment(id, username) {
+    //Getting Key to provide unique id to every comment
+    let Keys = database().ref(`/`).push().key;
+    console.log("Keys===>",Keys)
+
+
     firestore()
       .collection('comment')
-      .doc(id)
+      .doc(id/Keys)
       // .update({
       //   com: [{comment: comment, name: username}],
       // });
-    .set({
+      .set({
 
-      comment: comment,
-      name: username,
-      date: new Date,
-      id: id,
-    }
-    ).then()
+        comment: comment,
+        name: username,
+        date: new Date,
+        id: id,
+      }
+      ).then()
   }
 
   return (
@@ -220,13 +226,13 @@ function Accessories({addTo, deleteFrom, cart}) {
                   </TouchableOpacity>
                 </View>
                 <View>
-                  {comdata.map(comdata => (
+                {comdata.map(comdata => (
+                    comdata.id == data.id?
                     <View>
-                      <Text>
-                      {comdata.comment}
+                      <Text style={styles.com}>
+                        {comdata.comment}
                       </Text>
-                      {console.log(comdata)}
-                    </View>
+                    </View>:null
                   ))}
                   </View>
               </Card>
@@ -272,6 +278,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 3,
     shadowOffset: {width: 1, height: 5},
+  },
+  com:{
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginBottom:'3%',
+    borderRadius:10,
+    backgroundColor:'#c9c4c3',
+    padding:5,
   },
 });
 

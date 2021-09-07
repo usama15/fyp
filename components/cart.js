@@ -14,14 +14,18 @@ import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {connect} from 'react-redux';
-import { deletefromcart} from '../Redux/actions/cart';
+import { addtocart, deletefromcart} from '../Redux/actions/cart';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import Agrment from './Agrment';
+import { Modal, Portal, Button, Provider } from 'react-native-paper';
+
 
 const mapDispatchtoProps = dispatch => {
   return {
     delete: id => dispatch(deletefromcart(id)),
+    add: product => dispatch(addtocart(product))
   };
 };
 
@@ -36,6 +40,7 @@ class scrCart extends React.Component {
     super(props);
     this.state = {
       cart: this.props.cart,
+      visible: false,
     };
   }
 
@@ -44,8 +49,10 @@ class scrCart extends React.Component {
       this.setState({cart: this.props.cart});
     }
   }
+  
 
   render() {
+    
     function _renderHeader(item, expanded) {
       return (
         <View
@@ -158,26 +165,28 @@ class scrCart extends React.Component {
             {' '}
             {product.description}{' '}
           </Text>
-          {console.log(this.props)}
-          <TouchableOpacity
-            style={styles.loginBtn1}
-            onPress={() => that.props.delete(product.id)}>
-            <Text
-              style={
-                ({fontfamily: 'poppins'},
-                {fontWeight: 'bold'},
-                {color: 'black', fontSize: 18})
-              }>
-              Remove from cart
-            </Text>
-          </TouchableOpacity>
+          <View style={{alignItems: 'center', marginBottom: '1%',}}>
+                  <TouchableOpacity
+                    style={styles.loginBtn1}
+                    onPress={() => that.props.delete(product.id)}
+                    >
+                    <Text
+                      style={
+                        ({fontfamily: 'poppins'},
+                        {fontWeight: 'bold'},
+                        {color: 'black', fontSize: 18})
+                      }>
+                    Remove from cart
+                    </Text>
+                  </TouchableOpacity>
+                </View>
         </Card>
       );
     }
 
     return (
       <Container>
-
+        {/* {console.log(this.state.cart[0].id)} */}
         <View style={styles.container}>
         <Content padder>
           {/* {console.log("cart:"+ this.props.cart)} */}
@@ -190,6 +199,37 @@ class scrCart extends React.Component {
             renderContent={_renderContent}
           />
         </Content>
+        </View>
+        <View>
+          {
+
+          }
+        </View>
+        <View>
+        <View style={{alignItems: 'center', marginBottom: '0%', backgroundColor:'#112339'}}>
+                  <TouchableOpacity
+                    style={styles.loginBtn1}
+                    onPress={()=> 
+                    {
+                      if (this.state.cart == '') {
+                        alert('Cart is Empty')
+                      } else {
+                        
+                        this.props.navigation.navigate('agrment')
+                      }
+                    }
+                    }
+                    >
+                    <Text
+                      style={
+                        ({fontfamily: 'poppins'},
+                        {fontWeight: 'bold'},
+                        {color: 'black', fontSize: 18})
+                      }>
+                    Check Out
+                    </Text>
+                  </TouchableOpacity>
+                </View>
         </View>
       </Container>
     );
@@ -218,7 +258,7 @@ const styles = StyleSheet.create({
     elevation: 3,
   },
   loginBtn1: {
-    width: '100%',
+    width: '60%',
     borderRadius: 25,
     height: 45,
     alignItems: 'center',

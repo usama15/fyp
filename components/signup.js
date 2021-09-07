@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 //import firebase from '../database/firebase';
 import auth from '@react-native-firebase/auth';
-
+import firestore from '@react-native-firebase/firestore'
 export default class Signup extends Component {
   constructor() {
     super();
@@ -74,6 +74,13 @@ export default class Signup extends Component {
       
         auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then(
+          firestore().collection('users').doc().set({
+            email: this.state.email,
+            password:this.state.password,
+            username: this.state.displayName
+          })
+        )
         .then(res => {
           alert('User registered successfully!');
           this.setState({

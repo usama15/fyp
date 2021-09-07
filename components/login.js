@@ -99,7 +99,11 @@ export default class Login extends Component {
       if ((await auth().signInWithCredential(googleCredential)) != null) {
         await AsyncStorage.setItem('@login', 'true').then(() =>
           this.props.navigation.navigate('BottomNav'),
-        );
+        )
+        .then((response) => {
+        console.log(response.value)
+
+        })
       }
     } catch (error) {
       alert(error);

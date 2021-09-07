@@ -8,8 +8,9 @@ import {
   Image,
 } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {ScrollView} from 'react-native';
+import { ScrollView } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import database from "@react-native-firebase/database"
 import {
   Left,
   Card,
@@ -21,10 +22,10 @@ import {
   Input,
 } from 'native-base';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import {connect} from 'react-redux'
-import {addtocart, deletefromcart} from '../Redux/actions/cart';
+import { connect } from 'react-redux'
+import { addtocart, deletefromcart } from '../Redux/actions/cart';
 
-function Gaming({addTo, deleteFrom, cart}) {
+function Gaming({ addTo, deleteFrom, cart }) {
   const [post, setPost] = React.useState([]);
   const [cpost, setCpost] = React.useState([]);
 
@@ -43,7 +44,7 @@ function Gaming({addTo, deleteFrom, cart}) {
   const data = post.filter(x => x.catagory === 'Gaming');
   const [comment, setComment] = React.useState([]);
 
-   React.useEffect(async () => {
+  React.useEffect(async () => {
     await firestore()
       .collection('comment')
       .onSnapshot(snapshot => {
@@ -57,20 +58,25 @@ function Gaming({addTo, deleteFrom, cart}) {
   const comdata = cpost.filter(x => x.id.id === data.id);
 
   function addComment(id, username) {
+    //Getting Key to provide unique id to every comment
+    let Keys = database().ref(`/`).push().key;
+    console.log("Keys===>",Keys)
+
+
     firestore()
       .collection('comment')
-      .doc(id)
+      .doc(id/Keys)
       // .update({
       //   com: [{comment: comment, name: username}],
       // });
-    .set({
+      .set({
 
-      comment: comment,
-      name: username,
-      date: new Date,
-      id: id,
-    }
-    ).then()
+        comment: comment,
+        name: username,
+        date: new Date,
+        id: id,
+      }
+      ).then()
   }
 
   return (
@@ -80,13 +86,13 @@ function Gaming({addTo, deleteFrom, cart}) {
           <Header
             searchBar
             round
-            style={{backgroundColor: 'white', height: 60, borderRadius: 30}}>
+            style={{ backgroundColor: 'white', height: 60, borderRadius: 30 }}>
             <Item>
               <Icon name="ios-search" color="#D49A9A" />
               <Input
                 placeholder="Search Here.."
                 placeholderTextColor="#D49A9A"
-                // onChangeText={name => this.setState({search: name})}
+              // onChangeText={name => this.setState({search: name})}
               />
             </Item>
           </Header>
@@ -107,9 +113,9 @@ function Gaming({addTo, deleteFrom, cart}) {
                     </Text>
                   </Left>
                 </CardItem>
-                <CardItem style={{justifyContent: 'center'}}>
+                <CardItem style={{ justifyContent: 'center' }}>
                   <Image
-                    style={{height: 200, width: 150}}
+                    style={{ height: 200, width: 150 }}
                     source={{
                       uri: data.image,
                     }}
@@ -175,24 +181,24 @@ function Gaming({addTo, deleteFrom, cart}) {
                   {' '}
                   {data.description}{' '}
                 </Text>
-                <View style={{alignItems: 'center', marginBottom: '2%'}}>
+                <View style={{ alignItems: 'center', marginBottom: '2%' }}>
                   <TouchableOpacity
                     style={styles.loginBtn1}
-                    onPress={()=> 
+                    onPress={() =>
                       !cart.includes(data)
-                      ? addTo(data)
-                      : deleteFrom(data.id) 
+                        ? addTo(data)
+                        : deleteFrom(data.id)
                     }
-                    >
+                  >
                     <Text
                       style={
-                        ({fontfamily: 'poppins'},
-                        {fontWeight: 'bold'},
-                        {color: 'black', fontSize: 18})
+                        ({ fontfamily: 'poppins' },
+                          { fontWeight: 'bold' },
+                          { color: 'black', fontSize: 18 })
                       }>
-                     {cart.includes(data)
-                     ? 'Remove from cart'
-                     : 'Add to cart'}
+                      {cart.includes(data)
+                        ? 'Remove from cart'
+                        : 'Add to cart'}
                     </Text>
                   </TouchableOpacity>
                 </View>
@@ -214,21 +220,21 @@ function Gaming({addTo, deleteFrom, cart}) {
                     labelValue={comment}
                   />
                   <TouchableOpacity
-                    style={{marginRight: '2%'}}
+                    style={{ marginRight: '2%' }}
                     onPress={() => addComment(data.id, data.username)}>
                     <Ionicons name="send" size={30} color="#D49A9A" />
                   </TouchableOpacity>
                 </View>
                 <View>
-                  {comdata.map(comdata => (
+                {comdata.map(comdata => (
+                    comdata.id == data.id?
                     <View>
-                      <Text>
-                      {comdata.comment}
+                      <Text style={styles.com}>
+                        {comdata.comment}
                       </Text>
-                      {console.log(comdata)}
-                    </View>
+                    </View>:null
                   ))}
-                  </View>
+                </View>
               </Card>
             ))}
           </View>
@@ -271,7 +277,15 @@ const styles = StyleSheet.create({
     shadowColor: '#87C7D8',
     shadowOpacity: 1,
     elevation: 3,
-    shadowOffset: {width: 1, height: 5},
+    shadowOffset: { width: 1, height: 5 },
+  },
+  com:{
+    marginLeft:'10%',
+    marginRight:'10%',
+    marginBottom:'3%',
+    borderRadius:10,
+    backgroundColor:'#c9c4c3',
+    padding:5,
   },
 });
 

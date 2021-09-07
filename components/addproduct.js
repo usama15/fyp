@@ -34,7 +34,6 @@ const AddProduct = ({ navigation }) => {
   const [varproductPrice, setvarproductPrice] = useState("");
   const [varproductContactNo, setvarproductContactNo] = useState("");
   const [varproductArea, setvarproductArea] = useState("");
-  const [varproductCatagory, setvarproductCatagory] = useState("");
   const [varproductDescription, setvarproductDescription] = useState("");
   const [productID, setproductID] = useState(uuidv4())
   const [newimage, setnewimage] = useState("");
@@ -51,7 +50,6 @@ const AddProduct = ({ navigation }) => {
     {label: 'House Hold', value: 'House Hold'},
 
   ]);
-  console.log("value"+value)
 
   const uploadImg = () => {
     ImagePicker.openPicker({
@@ -137,10 +135,20 @@ const AddProduct = ({ navigation }) => {
               catagory: value,
               description: varproductDescription,
               image: imgurl,
+            }).then({
+              setproductID: setproductID(uuidv4),
+              setvaruserName: setvaruserName(''),
+              setvarproductName: setvarproductName(''),
+              setvarproductPrice: setvarproductPrice(''),
+              setvarproductContactNo: setvarproductContactNo(''),
+              setvarproductArea: setvarproductArea(''),
+              setValue: setValue(''),
+              setvarproductDescription: setvarproductDescription(''),
+              setImgURL: setImgURL(''),
             })
             .then(() => {
               alert("Data Stored");
-              // navigation.navigate("explorescreen");
+              navigation.navigate("BottomNav");
             });
         })
         .catch((e) => console.log(e));
@@ -308,7 +316,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     elevation: 3,
     shadowOffset: { width: 1, height: 5 },
-    marginBottom:'3%',
+    marginBottom:'18%',
   },
   logo1:{
     fontSize:30,

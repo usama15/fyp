@@ -42,7 +42,7 @@ const Home = () => {
           <View style={styles.main}>
             <TouchableOpacity
               style={styles.btn}
-              onPress={() => navigation.navigate('Bags')}>
+              onPress={() => navigation.navigate('bags')}>
               <Image
                 style={styles.img}
                 source={{uri:'https://cdn3.vectorstock.com/i/1000x1000/38/82/business-leather-bag-icon-outline-style-vector-31403882.jpg'}}

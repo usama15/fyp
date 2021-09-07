@@ -4,6 +4,7 @@ import {Image, Linking, StyleSheet} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/native';
+import userHelp from './userhelp'
 
 
 const AppBar = () => {
@@ -13,7 +14,8 @@ const AppBar = () => {
   return (
     <Appbar.Header theme={{colors: {primary: 'white'}}}>
       <Appbar.Action icon="menu" />
-      <Appbar.Content title="Title" subtitle="Subtitle" />
+      <Appbar.Content title="Camao" />
+      <Appbar.Action icon='help-circle' onPress={() =>  navigation.navigate('userhelp') }/>
       <Appbar.Action
         icon="logout"
         onPress={async () => {

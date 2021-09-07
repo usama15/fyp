@@ -15,6 +15,8 @@ import Accessories from './Screen/Accessories'
 import Gaming from './Screen/Gaming'
 import HouseHold from './Screen/HouseHold'
 import explorescreen from './components/explorescreen';
+import CheckOut from './components/CheckOut';
+import Agrment from './components/Agrment';
 
 
 
@@ -90,6 +92,16 @@ function MyStack({initalScreen}) {
       <Stack.Screen
         name="household"
         component={HouseHold}
+        options={({title: 'userhelp'}, {headerShown: false})}
+      />
+      <Stack.Screen
+        name="checkout"
+        component={CheckOut}
+        options={({title: 'userhelp'}, {headerShown: false})}
+      />
+       <Stack.Screen
+        name="agrment"
+        component={Agrment}
         options={({title: 'userhelp'}, {headerShown: false})}
       />
     </Stack.Navigator>
