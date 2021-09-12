@@ -28,6 +28,8 @@ import {addtocart, deletefromcart} from '../Redux/actions/cart';
 function Electronic({addTo, deleteFrom, cart}) {
   const [post, setPost] = React.useState([]);
   const [cpost, setCpost] = React.useState([]);
+  const [comment, setComment] = React.useState([]);
+
 
 
   React.useEffect(async () => {
@@ -42,7 +44,6 @@ function Electronic({addTo, deleteFrom, cart}) {
       });
   }, []);
   const data = post.filter(x => x.catagory === 'Electronic');
-  const [comment, setComment] = React.useState([]);
 
    React.useEffect(async () => {
     await firestore()

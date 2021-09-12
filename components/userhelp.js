@@ -17,7 +17,7 @@ export default class UserHelp extends Component {
             name="arrow-back-ios"
             size={35}
             color="#D49A9A"
-            onPress={() => this.props.navigation.navigate('explorescreen')}
+            onPress={() => this.props.navigation.navigate('BottomNav')}
           ></MaterialIcons>
         </Left>
         <Body style={{flex: 3,justifyContent: 'center'}}>

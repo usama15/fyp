@@ -29,6 +29,10 @@ import {addtocart, deletefromcart} from '../Redux/actions/cart';
 function Bags({addTo, deleteFrom, cart}) {
   const [post, setPost] = React.useState([]);
   const [cpost, setCpost] = React.useState([]);
+  const [area, setArea] = React.useState('area');
+  const [price, setPrice] = React.useState('');
+  const [data, setData] = React.useState([]);
+  const [comment, setComment] = React.useState([]);
 
 
   React.useEffect(async () => {
@@ -39,11 +43,9 @@ function Bags({addTo, deleteFrom, cart}) {
           id: doc.id,
           ...doc.data(),
         }));
-        setPost(newPost);
+        setPost(newPost.filter(x => x.catagory == 'Bags'));
       });
   }, []);
-  const data = post.filter(x => x.catagory === 'Bags');
-  const [comment, setComment] = React.useState([]);
 
    React.useEffect(async () => {
     await firestore()
@@ -56,8 +58,7 @@ function Bags({addTo, deleteFrom, cart}) {
         setCpost(newPost);
       });
   }, []);
-  const comdata = cpost.filter(x => x.id.id === data.id);
-  // console.log('data ' + comdata[0].date.toUTCString())
+  const comdata = cpost.filter(x => x.id.id === post.id);
   function addComment(id, username) {
     //Getting Key to provide unique id to every comment
     let Keys = database().ref(`/`).push().key;
@@ -76,26 +77,110 @@ function Bags({addTo, deleteFrom, cart}) {
       ).then()
   }
 
+  // React.useEffect(() => {
+  // const filter = () => {
+  //   // var varproduct = data;
+
+  //   if (
+  //     area !== '' ||
+  //     price !== ''
+  //   ) {
+  //     if (area !== '') {
+  //       fdata.filter(
+  //         data => setFdata(data.area == area) 
+  //       );
+  //     }
+
+  //     if (price !== '') {
+  //       price == 'Low To High Price'
+  //         ? (setFdata(fdata.sort((a, b) => a.price - b.price)))
+  //         : (setFdata(fdata.sort((a, b) => b.price - a.price)) );
+  //     }
+  //   }
+  //   // console.log(varproduct);
+
+  //   // setFdata(varproduct);
+  // };
+
+  // filter()
+  // }, [])
+
+//   {
+//     area ? post.filter(p => area === p.area).map(data => ()) :
+//     lowHighPrice && post.sort().map(data => ()) :
+//     HighToLowPrice && post.sort().map(data => ()) :
+//     post.map(data => ())
+// }
+
+// React.useEffect(() => {
+//   const sortArray = type => {
+//     const types = {
+//       karachi: 'Karachi',
+//       lahore: 'Lahore'
+//     }
+
+//     const sortProperty = types[type];
+//     const sorted = [post.area].sort((a, b) => b[sortProperty] - a[sortProperty]);
+//     setData(sorted);
+//   }
+
+//   sortArray(area)
+// }, [area])
+
   return (
     <SafeAreaView>
       <ScrollView>
         <View>
-          <Header
-            searchBar
-            round
-            style={{backgroundColor: 'white', height: 60, borderRadius: 30}}>
-            <Item>
-              <Icon name="ios-search" color="#D49A9A" />
-              <Input
-                placeholder="Search Here.."
-                placeholderTextColor="#D49A9A"
-                // onChangeText={name => this.setState({search: name})}
-              />
-            </Item>
-          </Header>
+        <Header
+          searchBar
+          round
+          style={{backgroundColor: 'white', height: 60, borderRadius: 30}}>
+          <Item>
+            <Icon name="ios-search" color="#D49A9A" />
+            <Input
+              placeholder="Search Here.."
+              placeholderTextColor="#D49A9A"
+              onChangeText={name => this.setState({search: name})}
+            />
+          </Item>
+        </Header>
+        <View style={{flexDirection: 'row'}}>
+          {/* <Picker
+            style={{width: '33%'}}
+            mode="dropdown"
+            selectedValue={price}
+            onValueChange={value => setPrice(value)}
+            >
+            <Picker.Item label="Price" value="" color="#D49A9A" />
+            <Picker.Item
+              label="Low To High Price"
+              value="LowToHighPrice"
+              color="#D49A9A"
+            />
+            <Picker.Item
+              label="High To Low Price"
+              value="HighToLowPrice"
+              color="#D49A9A"
+            />
+          </Picker>
+          <Picker
+            style={{width: '33%'}}
+            mode="dropdown"
+            selectedValue={area}
+            onValueChange={value => setArea(value)}
+            >
+            <Picker.Item label="Area" value="area" color="#D49A9A" />
+            <Picker.Item label="Karachi" value="Karachi" color="#D49A9A" />
+            <Picker.Item label="Lahore" value="Lahore" color="#D49A9A" />
+          </Picker> */}
+        </View>
           <View>
-            {data.map(data => (
-              <Card key={data.username.id}>
+            {
+              // area ? post.filter(post => area === post.area):
+              // // price ? LowToHighPrice && post.sort().map():
+              // price ? HighToLowPrice && post.sort().map() :
+              post.map(post => (
+              <Card key={post.username.id}>
                 <CardItem style={styles.card}>
                   <Left>
                     <AntDesign name="user" size={30} color="#D49A9A" />
@@ -106,7 +191,7 @@ function Bags({addTo, deleteFrom, cart}) {
                         color: 'black',
                       }}>
                       {' '}
-                      {data.username}{' '}
+                      {post.username}{' '}
                     </Text>
                   </Left>
                 </CardItem>
@@ -114,7 +199,7 @@ function Bags({addTo, deleteFrom, cart}) {
                   <Image
                     style={{height: 200, width: 150}}
                     source={{
-                      uri: data.image,
+                      uri: post.image,
                     }}
                   />
                 </CardItem>
@@ -132,7 +217,7 @@ function Bags({addTo, deleteFrom, cart}) {
                       color: 'black',
                     }}>
                     {' '}
-                    {data.name}{' '}
+                    {post.name}{' '}
                   </Text>
                   <Text
                     style={{
@@ -141,7 +226,7 @@ function Bags({addTo, deleteFrom, cart}) {
                       justifyContent: 'flex-end',
                     }}>
                     {'Pkr' + ' '}
-                    {data.price}
+                    {post.price}
                     {' ' + '/='}
                   </Text>
                 </CardItem>
@@ -158,7 +243,7 @@ function Bags({addTo, deleteFrom, cart}) {
                       color: 'black',
                     }}>
                     {' '}
-                    {data.catagory}{' '}
+                    {post.catagory}{' '}
                   </Text>
                   <Text
                     style={{
@@ -166,7 +251,7 @@ function Bags({addTo, deleteFrom, cart}) {
                       color: 'black',
                     }}>
                     {' '}
-                    {data.area}{' '}
+                    {post.area}{' '}
                   </Text>
                 </CardItem>
                 <Text
@@ -176,15 +261,15 @@ function Bags({addTo, deleteFrom, cart}) {
                     marginLeft: '5%',
                   }}>
                   {' '}
-                  {data.description}{' '}
+                  {post.description}{' '}
                 </Text>
                 <View style={{alignItems: 'center', marginBottom: '2%'}}>
                   <TouchableOpacity
                     style={styles.loginBtn1}
                     onPress={()=> 
-                      !cart.includes(data)
-                      ? addTo(data)
-                      : deleteFrom(data.id) 
+                      !cart.includes(post)
+                      ? addTo(post)
+                      : deleteFrom(post.id) 
                     }
                     >
                     <Text
@@ -193,7 +278,7 @@ function Bags({addTo, deleteFrom, cart}) {
                         {fontWeight: 'bold'},
                         {color: 'black', fontSize: 18})
                       }>
-                     {cart.includes(data)
+                     {cart.includes(post)
                      ? 'Remove from cart'
                      : 'Add to cart'}
                     </Text>
@@ -218,13 +303,13 @@ function Bags({addTo, deleteFrom, cart}) {
                   />
                   <TouchableOpacity
                     style={{marginRight: '2%'}}
-                    onPress={() => addComment(data.id, data.username)}>
+                    onPress={() => addComment(post.id, post.username)}>
                     <Ionicons name="send" size={30} color="#D49A9A" />
                   </TouchableOpacity>
                 </View>
                 <View>
                 {comdata.map(comdata => (
-                    comdata.id == data.id?
+                    comdata.id == post.id?
                     <View>
                       <Text style={styles.com}>
                         {comdata.comment}

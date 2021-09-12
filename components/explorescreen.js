@@ -27,8 +27,17 @@ import {connect} from 'react-redux';
 import {addtocart, deletefromcart} from '../Redux/actions/cart';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Comments from './Comments';
+import firestore from '@react-native-firebase/firestore';
+
 
 let Product = database().ref('/products');
+// let product = firebase().collection("product").onSnapshot(snapshot => {
+//   const newPost = snapshot.docs.map(doc => ({
+//     id: doc.id,
+//     ...doc.data(),
+//   }));
+//   const Product = newPost
+// }
 
 const mapStatetoProps = state => {
   return {
@@ -92,7 +101,6 @@ class ExploreScreen extends Component {
   productRender = (product, index) => {
     return (
       <TouchableOpacity onPress={
-        // product.id
         this.props.navigation.navigate('products')}>
       <Card key={product.username.id}>
         <CardItem style={styles.card}>
@@ -310,7 +318,8 @@ class ExploreScreen extends Component {
             style={{width: '33%'}}
             mode="dropdown"
             selectedValue={this.state.area}
-            onValueChange={value => this.setState({area: value}, this.filter)}>
+            onValueChange={value => this.setState({area: value}, this.filter)}
+            >
             <Picker.Item label="Area" value="" color="#D49A9A" />
             <Picker.Item label="Karachi" value="Karachi" color="#D49A9A" />
             <Picker.Item label="Lahore" value="Lahore" color="#D49A9A" />
@@ -318,13 +327,9 @@ class ExploreScreen extends Component {
         </View>
         <Content>
           {/* {console.log(this.state.products)} */}
-          {this.state.products &&
-            this.state.data.map((product, index) =>
-              this.state.search == ''
+          {this.state.products && this.state.data.map((product, index) => this.state.search == ''
                 ? this.productRender(product, index)
-                : this.state.search.toLowerCase() ==
-                    product.name.toLowerCase() &&
-                  this.productRender(product, index),
+                : this.state.search.toLowerCase() == product.name.toLowerCase() && this.productRender(product, index),
             )}
         </Content>
         <Footer style={{height: 50}}>

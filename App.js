@@ -66,7 +66,7 @@ function MyStack({initalScreen}) {
       />
        <Stack.Screen
         name="electronic"
-        component={Electronic}
+        component={explorescreen}
         options={({title: 'userhelp'}, {headerShown: false})}
       />
        <Stack.Screen

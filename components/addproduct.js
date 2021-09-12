@@ -121,7 +121,6 @@ const AddProduct = ({ navigation }) => {
      
       getImageURL()
         .then((imgurl) => {
-          console.log(imgurl);
           firestore()
             .collection("products")
             .doc(productID)
@@ -135,7 +134,8 @@ const AddProduct = ({ navigation }) => {
               catagory: value,
               description: varproductDescription,
               image: imgurl,
-            }).then({
+            })
+            .then({
               setproductID: setproductID(uuidv4),
               setvaruserName: setvaruserName(''),
               setvarproductName: setvarproductName(''),
