@@ -14,7 +14,6 @@ import Bags from './Screen/Bags'
 import Accessories from './Screen/Accessories'
 import Gaming from './Screen/Gaming'
 import HouseHold from './Screen/HouseHold'
-import explorescreen from './components/explorescreen';
 import CheckOut from './components/CheckOut';
 import Agrment from './components/Agrment';
 

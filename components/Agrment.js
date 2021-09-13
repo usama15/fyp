@@ -35,15 +35,6 @@ const Agrment = () => {
             and more recently with desktop publishing software like Aldus
             PageMaker including versions of Lorem Ipsum
           </Text>
-          {/* <View>
-            <Checkbox
-              status={checked ? 'checked' : 'unchecked'}
-              onPress={() => {
-                setChecked(!checked);
-              }}
-            />
-            <Text>Agree</Text>
-          </View> */}
           <View style={{alignItems: 'center', marginBottom: '2%'}}>
           <Button
             mode="contained"

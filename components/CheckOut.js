@@ -54,7 +54,7 @@ const CheckOut = () => {
       };
     return(
         <SafeAreaView>
-        <View>
+        <View style={{backgroundColor:'#112339', height:'100%',}}>
         <Text style={styles.head1}> Payment Method </Text>
         <View style={styles.btn}>
         <TouchableOpacity
@@ -63,7 +63,7 @@ const CheckOut = () => {
           >
             <View style={{flexDirection:"row"}}>
             <Ionicons name="md-camera-outline" size={30} color= '#D49A9A' />
-          <Text style={{ fontWeight: "bold", color: '#D49A9A', marginTop:6, paddingLeft:6 }}>Choose Photo</Text>
+          <Text style={{ fontWeight: "bold", color: '#D49A9A', marginTop:6, paddingLeft:6 }}>Upload Your Receipt</Text>
           </View>
         </TouchableOpacity>
         </View>
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
         marginTop: '20%',
         fontSize: 22,
         textAlign: 'center',
-        color: 'black',
+        color: 'white',
         padding: 5,
     },
       photobtn: {

@@ -12,7 +12,7 @@ const AppBar = () => {
 
 
   return (
-    <Appbar.Header theme={{colors: {primary: 'white'}}}>
+    <Appbar.Header theme={{colors: {primary: '#112339'}}}>
       <Appbar.Action icon="menu" />
       <Appbar.Content title="Camao" />
       <Appbar.Action icon='help-circle' onPress={() =>  navigation.navigate('userhelp') }/>

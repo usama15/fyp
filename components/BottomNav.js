@@ -4,7 +4,6 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import AddProduct from './addproduct';
-import Products from './products'
 import MainScreen from './mainScreen'
 import cart from './cart';
 
@@ -14,7 +13,7 @@ export default function BottomNav() {
   return (
     <Tab.Navigator
       initialRouteName="MainScreen"
-      barStyle={{backgroundColor: '#3C3C3C'}}>
+      barStyle={{backgroundColor: '#112339'}}>
        
       <Tab.Screen
         name="addproduct"

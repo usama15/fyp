@@ -36,7 +36,7 @@ const Home = () => {
                 style={styles.img}
                 source={{uri:'https://img.icons8.com/ios/452/furniture.png'}}
               />
-              <Text style={styles.name}>Furnicher</Text>
+              <Text style={styles.name}>Furniture</Text>
             </TouchableOpacity>
           </View>
           <View style={styles.main}>

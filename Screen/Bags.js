@@ -131,38 +131,7 @@ function Bags({addTo, deleteFrom, cart}) {
     <SafeAreaView>
       <ScrollView>
         <View>
-        <Header
-          searchBar
-          round
-          style={{backgroundColor: 'white', height: 60, borderRadius: 30}}>
-          <Item>
-            <Icon name="ios-search" color="#D49A9A" />
-            <Input
-              placeholder="Search Here.."
-              placeholderTextColor="#D49A9A"
-              onChangeText={name => this.setState({search: name})}
-            />
-          </Item>
-        </Header>
         <View style={{flexDirection: 'row'}}>
-          {/* <Picker
-            style={{width: '33%'}}
-            mode="dropdown"
-            selectedValue={price}
-            onValueChange={value => setPrice(value)}
-            >
-            <Picker.Item label="Price" value="" color="#D49A9A" />
-            <Picker.Item
-              label="Low To High Price"
-              value="LowToHighPrice"
-              color="#D49A9A"
-            />
-            <Picker.Item
-              label="High To Low Price"
-              value="HighToLowPrice"
-              color="#D49A9A"
-            />
-          </Picker>
           <Picker
             style={{width: '33%'}}
             mode="dropdown"
@@ -170,16 +139,291 @@ function Bags({addTo, deleteFrom, cart}) {
             onValueChange={value => setArea(value)}
             >
             <Picker.Item label="Area" value="area" color="#D49A9A" />
-            <Picker.Item label="Karachi" value="Karachi" color="#D49A9A" />
-            <Picker.Item label="Lahore" value="Lahore" color="#D49A9A" />
-          </Picker> */}
+            <Picker.Item label="Lahore" value="Karachi" color="#D49A9A" />
+            <Picker.Item label="Karachi" value="Lahore" color="#D49A9A" />
+          </Picker>
         </View>
           <View>
             {
-              // area ? post.filter(post => area === post.area):
-              // // price ? LowToHighPrice && post.sort().map():
-              // price ? HighToLowPrice && post.sort().map() :
-              post.map(post => (
+              area !== '' ? post.filter(post => area !== post.area).map(post => ( <Card key={post.username.id}>
+                <CardItem style={styles.card}>
+                  <Left>
+                    <AntDesign name="user" size={30} color="#D49A9A" />
+                    <Text
+                      style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: 'black',
+                      }}>
+                      {' '}
+                      {post.username}{' '}
+                    </Text>
+                  </Left>
+                </CardItem>
+                <CardItem style={{justifyContent: 'center'}}>
+                  <Image
+                    style={{height: 200, width: 150}}
+                    source={{
+                      uri: post.image,
+                    }}
+                  />
+                </CardItem>
+                <CardItem
+                  cardBody
+                  style={{
+                    justifyContent: 'space-between',
+                    width: '90%',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.name}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                      justifyContent: 'flex-end',
+                    }}>
+                    {'Pkr' + ' '}
+                    {post.price}
+                    {' ' + '/='}
+                  </Text>
+                </CardItem>
+                <CardItem
+                  cardBody
+                  style={{
+                    justifyContent: 'space-between',
+                    width: '90%',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.catagory}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.area}{' '}
+                  </Text>
+                </CardItem>
+                <Text
+                  style={{
+                    fontSize: 17,
+                    color: 'black',
+                    marginLeft: '5%',
+                  }}>
+                  {' '}
+                  {post.description}{' '}
+                </Text>
+                <View style={{alignItems: 'center', marginBottom: '2%'}}>
+                  <TouchableOpacity
+                    style={styles.loginBtn1}
+                    onPress={()=> 
+                      !cart.includes(post)
+                      ? addTo(post)
+                      : deleteFrom(post.id) 
+                    }
+                    >
+                    <Text
+                      style={
+                        ({fontfamily: 'poppins'},
+                        {fontWeight: 'bold'},
+                        {color: 'black', fontSize: 18})
+                      }>
+                     {cart.includes(post)
+                     ? 'Remove from cart'
+                     : 'Add to cart'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#f2f2f2',
+                    height: 60,
+                    borderRadius: 30,
+                    width: '95%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: '3%',
+                    marginBottom: '5%',
+                  }}>
+                  <Input
+                    placeholder="Comment Here.."
+                    placeholderTextColor="#D49A9A"
+                    onChangeText={text => setComment(text)}
+                    labelValue={comment}
+                  />
+                  <TouchableOpacity
+                    style={{marginRight: '2%'}}
+                    onPress={() => addComment(post.id, post.username)}>
+                    <Ionicons name="send" size={30} color="#D49A9A" />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                {comdata.map(comdata => (
+                    comdata.id == post.id?
+                    <View>
+                      <Text style={styles.com}>
+                        {comdata.comment}
+                      </Text>
+                    </View>:null
+                  ))}
+                  </View>
+              </Card>)):
+              price ? LowToHighPrice && post.sort((a, b) => (a.price > b.price) ? 1 : -1).map(post => ( 
+              <Card key={post.username.id}>
+                <CardItem style={styles.card}>
+                  <Left>
+                    <AntDesign name="user" size={30} color="#D49A9A" />
+                    <Text
+                      style={{
+                        fontSize: 25,
+                        fontWeight: 'bold',
+                        color: 'black',
+                      }}>
+                      {' '}
+                      {post.username}{' '}
+                    </Text>
+                  </Left>
+                </CardItem>
+                <CardItem style={{justifyContent: 'center'}}>
+                  <Image
+                    style={{height: 200, width: 150}}
+                    source={{
+                      uri: post.image,
+                    }}
+                  />
+                </CardItem>
+                <CardItem
+                  cardBody
+                  style={{
+                    justifyContent: 'space-between',
+                    width: '90%',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 25,
+                      fontWeight: 'bold',
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.name}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                      justifyContent: 'flex-end',
+                    }}>
+                    {'Pkr' + ' '}
+                    {post.price}
+                    {' ' + '/='}
+                  </Text>
+                </CardItem>
+                <CardItem
+                  cardBody
+                  style={{
+                    justifyContent: 'space-between',
+                    width: '90%',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.catagory}{' '}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      color: 'black',
+                    }}>
+                    {' '}
+                    {post.area}{' '}
+                  </Text>
+                </CardItem>
+                <Text
+                  style={{
+                    fontSize: 17,
+                    color: 'black',
+                    marginLeft: '5%',
+                  }}>
+                  {' '}
+                  {post.description}{' '}
+                </Text>
+                <View style={{alignItems: 'center', marginBottom: '2%'}}>
+                  <TouchableOpacity
+                    style={styles.loginBtn1}
+                    onPress={()=> 
+                      !cart.includes(post)
+                      ? addTo(post)
+                      : deleteFrom(post.id) 
+                    }
+                    >
+                    <Text
+                      style={
+                        ({fontfamily: 'poppins'},
+                        {fontWeight: 'bold'},
+                        {color: 'black', fontSize: 18})
+                      }>
+                     {cart.includes(post)
+                     ? 'Remove from cart'
+                     : 'Add to cart'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  style={{
+                    backgroundColor: '#f2f2f2',
+                    height: 60,
+                    borderRadius: 30,
+                    width: '95%',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    marginHorizontal: '3%',
+                    marginBottom: '5%',
+                  }}>
+                  <Input
+                    placeholder="Comment Here.."
+                    placeholderTextColor="#D49A9A"
+                    onChangeText={text => setComment(text)}
+                    labelValue={comment}
+                  />
+                  <TouchableOpacity
+                    style={{marginRight: '2%'}}
+                    onPress={() => addComment(post.id, post.username)}>
+                    <Ionicons name="send" size={30} color="#D49A9A" />
+                  </TouchableOpacity>
+                </View>
+                <View>
+                {comdata.map(comdata => (
+                    comdata.id == post.id?
+                    <View>
+                      <Text style={styles.com}>
+                        {comdata.comment}
+                      </Text>
+                    </View>:null
+                  ))}
+                  </View>
+              </Card>)):
+              price ? HighToLowPrice && post.sort((a, b) => b.price - a.price)
+              .map(post => (
               <Card key={post.username.id}>
                 <CardItem style={styles.card}>
                   <Left>
@@ -318,7 +562,9 @@ function Bags({addTo, deleteFrom, cart}) {
                   ))}
                   </View>
               </Card>
-            ))}
+            )
+            ):null
+          }
           </View>
         </View>
       </ScrollView>

@@ -23,10 +23,8 @@ import Icon from "react-native-vector-icons/Ionicons";
 import ImagePicker from "react-native-image-crop-picker";
 import storage from "@react-native-firebase/storage";
 import { v4 as uuidv4 } from 'uuid';
-import Comments from "./Comments";
 import DropDownPicker from 'react-native-dropdown-picker';
-import { TextInput } from 'react-native-paper';
-
+import {TextInput, RadioButton} from 'react-native-paper';
 
 const AddProduct = ({ navigation }) => {
   const [varuserName, setvaruserName] = useState("");
@@ -41,6 +39,7 @@ const AddProduct = ({ navigation }) => {
   const [ImgURL, setImgURL] = useState(null);
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState('');
+  const [rvalue, setRvalue] = React.useState(null);
   const [items, setItems] = useState([
     {label: 'Electronic', value: 'Electronic'},
     {label: 'Furnicher', value: 'Furnicher'},
@@ -224,7 +223,7 @@ const AddProduct = ({ navigation }) => {
             mode='outlined'
           />
         </View>
-        <View style={styles.inputView}>
+        {/* <View style={styles.inputView}>
           <TextInput
             style={styles.textInput1}
             label="Area"
@@ -232,8 +231,8 @@ const AddProduct = ({ navigation }) => {
             onChangeText={(text) => setvarproductArea(text)}
             text={varproductContactNo}
             mode='outlined'
-          />
-        </View>
+          /> */}
+        {/* </View> */}
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput1}
@@ -244,6 +243,18 @@ const AddProduct = ({ navigation }) => {
             mode='outlined'
           />
         </View>
+        <RadioButton.Group
+          onValueChange={newValue => setvarproductArea(newValue)}
+          value={varproductArea}>
+          <Text style={styles.gen}>Area</Text>
+          <View style={styles.radio}>
+            <RadioButton value="Karachi" />
+            <Text style={styles.lab}>Karachi</Text>
+            <RadioButton style={styles.sec} value="Lahore" />
+            <Text style={styles.lab}>Lahore</Text>
+          </View>
+        </RadioButton.Group>
+
         <View style={styles.btn}>
         <TouchableOpacity
           style={styles.photobtn}
@@ -277,6 +288,24 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     // justifyContent: "center",
     backgroundColor: '#112339',
+  },
+  lab: {
+    marginTop: '2%',
+    color:'white',
+  },
+  sec: {
+    marginHorizontal: '100%',
+  },
+  gen: {
+    marginHorizontal: '8%',
+    fontSize: 18,
+    marginTop: '2%',
+    color:'white',
+  },
+  radio: {
+    // flex: 1,
+    flexDirection: 'row',
+    marginHorizontal: '10%',
   },
   actionButtonIcon: {
     fontSize: 20,
