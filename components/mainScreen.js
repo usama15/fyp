@@ -18,7 +18,7 @@ const Home = () => {
     <SafeAreaView>
       <ScrollView>
         <Appbar/>
-        <View>
+        <View style={styles.container}>
           <View style={styles.main}>
             <TouchableOpacity
               style={styles.btn}
@@ -82,6 +82,9 @@ const Home = () => {
 };
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor:'#112339',
+  },
   main: {
     flex: 1,
     flexDirection: 'row',

@@ -45,7 +45,7 @@ const CheckOut = () => {
           try {
             reference.putFile(imageUri).then(() => {
               alert("Payment Success");
-              navigation.navigate('BottomNav')
+              navigation.navigate('MainScreen')
             });
           } catch (error) {
             alert(error.message);

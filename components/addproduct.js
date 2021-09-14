@@ -147,7 +147,7 @@ const AddProduct = ({ navigation }) => {
             })
             .then(() => {
               alert("Data Stored");
-              navigation.navigate("BottomNav");
+              navigation.navigate("MainScreen");
             });
         })
         .catch((e) => console.log(e));
@@ -223,16 +223,6 @@ const AddProduct = ({ navigation }) => {
             mode='outlined'
           />
         </View>
-        {/* <View style={styles.inputView}>
-          <TextInput
-            style={styles.textInput1}
-            label="Area"
-            theme={{colors: {text: 'black', primary: '#D49A9A'}}}
-            onChangeText={(text) => setvarproductArea(text)}
-            text={varproductContactNo}
-            mode='outlined'
-          /> */}
-        {/* </View> */}
         <View style={styles.inputView}>
           <TextInput
             style={styles.textInput1}

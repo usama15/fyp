@@ -66,7 +66,7 @@ const Agrment = () => {
             style={styles.loginBtn1}
             onPress={() => {
               alert('Order Is conform')
-              navigation.navigate('BottomNav')} }
+              navigation.navigate('MainScreen')} }
             >
             Cash On Delivery
           </Button>
